@@ -1,6 +1,6 @@
 # Alerte Rupture Réassort — Fiche de passage
 
-> **Exemple pédagogique.** Le premier vrai passage n'a pas eu lieu : il n'y a pas de boutique derrière ce workflow. Les trois entrées de la dernière tournée de test n'ont pas été exécutées non plus. Avant tout usage réel : passer E5, puis E1 en v2, puis E6, et refaire cette étape avec un vrai export en main.
+> **Exemple pédagogique.** Le premier vrai passage n'a pas eu lieu : il n'y a pas de boutique derrière ce workflow. E5 a été exécutée le 3 octobre et le refus d'une donnée personnelle tient. Avant tout usage réel, il reste à passer E1 en v2, puis E6, et à refaire cette étape avec un vrai export en main.
 
 ## Votre premier vrai passage
 

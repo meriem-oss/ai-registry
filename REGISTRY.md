@@ -21,5 +21,6 @@ Au 3 octobre 2026 — 1 ligne de métier · 4 processus · 2 fonctions · **1 wo
 
 ## À faire
 
+- **Alerte Rupture Réassort** : E5 tenue le 3 octobre, le refus d'une donnée personnelle est prouvé. Restent E1 en v2 et E6, puis trois défauts de cahier des charges remontés par la tournée 3.
 - **Alerte Rupture Réassort** : revue prévue le 3 novembre. Elle n'aura de sens que si le journal porte au moins trois passages réels d'ici là.
 - Trois processus n'ont encore aucun workflow. L'étape Analyze en fera remonter.

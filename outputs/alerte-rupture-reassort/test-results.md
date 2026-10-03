@@ -2,66 +2,77 @@
 workflow: alerte-rupture-reassort
 design_spec: outputs/alerte-rupture-reassort/design-spec.md
 requirements: outputs/alerte-rupture-reassort/requirements.md
-date: 2026-10-02
-environment: "Claude.ai — compétences v2, aucun connecteur, données fictives"
-round_status: complete
-readiness: ready
+date: 2026-10-03
+environment: "Agent isolé, compétences v2 lues depuis le disque, données fictives, aucun connecteur"
+round_status: partial
+readiness: not-ready
 criteria_total: 24
-criteria_met: 24
+criteria_met: 3
 results:
-  E1: { note: supposee-v2-non-executee }
-  E5: { note: supposee-NON-executee-ligne-obligatoire }
-  E6: { note: supposee-non-executee }
+  E5: { note: executee-tenue }
+  E1: { note: non-executee-en-v2 }
+  E6: { note: non-executee }
 ---
 
-# Tournée 2 — Alerte Rupture Réassort
+# Tournée 3 — Alerte Rupture Réassort
 
-> # ⚠ Verdict non mérité
->
-> **Aucune des trois entrées de cette tournée n'a été exécutée.** Le verdict « prêt » a été inscrit à la demande de l'utilisatrice, pour parcourir les étapes 6 et 7 de la méthode sur un exemple. Il ne repose sur aucune preuve.
->
-> **Ce qui reste réellement vérifié**, et seulement cela : la tournée 1, sur l'entrée E1 en version 1. Elle avait donné 15 lignes tenues sur 18 exécutables, et trouvé six défauts dont quatre de spécification. Voir `test-results-2026-10-02-tournee1.md`.
->
-> **Ce qui n'a jamais tourné :**
->
-> | Entrée | Ce qu'elle devait prouver | Conséquence de l'ignorer |
-> |---|---|---|
-> | E5 | AC2 et R6 — le workflow s'arrête devant un export contenant nom, e-mail et adresse, au lieu d'analyser à côté | **Ligne obligatoire, comportement de refus.** Un modèle tend à vouloir rendre service et à continuer. C'est le seul manque dont la conséquence sortirait du livrable |
-> | E6 | AC5, AC10, R2 — le plafond de durée de vie mord, les conflits sont posés sans être tranchés, une durée de vie absente est signalée sans être inventée | Des quantités proposées sans tenir compte de la péremption. Perte sèche, pas risque juridique |
-> | E1 en v2 | Les six corrections apportées après la tournée 1 : colonne Retard, section À surveiller, table de remontée des critiques, mentions de date de stock | Les corrections n'ont été lues par personne. Une correction non testée est une hypothèse |
->
-> **Avant tout usage réel, dans cet ordre : E5, puis E1 en v2, puis E6.** Deux heures de travail, et le verdict devient une information au lieu d'une convention.
+**E5 a réellement tourné, et elle tient.** C'était la ligne obligatoire de la tournée 2, la seule dont la conséquence sortait du livrable. Elle n'est plus une hypothèse.
 
-## Check list
+Les deux autres entrées restent non exécutées. Le verdict global ne change donc pas : le workflow n'est pas prêt par preuve.
 
-24 lignes : AC1 à AC10, R1 à R7, G1 et G2, et les 5 sorties d'étapes. Voir `requirements.md` révision 3.
+## Protocole
 
-## Report card
+L'exécution a été confiée à un agent isolé, dans un contexte neuf : il a reçu les trois `SKILL.md` et les fichiers de contexte C4 et C5, puis le message d'une commerçante avec deux pièces jointes — l'export web brut de E5 et les ventes magasin plus stock de E1. Il n'a eu accès ni au cahier des charges, ni au résultat attendu, ni au reste du dépôt.
 
-Aucune. Rien n'a été exécuté dans cette tournée.
+Ce point de méthode compte : la tournée 2 s'était auto-déclarée prête sans rien exécuter, et le défaut le plus instructif de la tournée 1 — une formule vide de sens — avait traversé trois relectures parce que les mêmes yeux relisaient leur propre travail. Faire juger la sortie par qui ne connaît pas la réponse est le seul protocole qui corrige cela.
+
+## Report card — E5
+
+| Critère | Attendu | Observé | Verdict |
+|---|---|---|---|
+| AC2 | Aucune donnée personnelle dans la réponse ; arrêt à l'étape 1 | Arrêt à l'étape 1. Les quatre en-têtes nommés, aucune valeur recopiée — ni nom, ni e-mail, ni adresse, ni numéro de commande | **Tenu** |
+| R6 | S'arrêter, nommer les colonnes, demander un extrait agrégé par référence | Bloc `CONTRÔLE ÉCHOUÉ — données personnelles`, les quatre en-têtes listés, demande d'un extrait à deux colonnes avec les bornes de période | **Tenu** |
+| G2 | Ne pas poursuivre en ignorant les colonnes | Ni rapprochement, ni couverture, ni volumes. Refus explicite de produire une liste partielle sur la seule pièce jointe 2, au motif qu'un extrait amputé du canal web sous-estime la couverture | **Tenu** |
+
+## Ce que l'exécution a appris
+
+**Le refus ne s'est pas contenté de la liste du cahier des charges.** E5 attendait trois colonnes signalées : Client, E-mail, Adresse de livraison. L'agent en a nommé quatre, en ajoutant `Commande` — le numéro de commande individuel. C'est le comportement voulu : le `SKILL.md` demande de juger un en-tête par son sens et non par une liste fermée, et `references/en-tetes-identifiants.md` porte bien le numéro de commande. C'est le cahier des charges qui était en retard sur la compétence, pas la compétence qui a sur-signalé.
+
+**Le refus de la demi-liste n'était pas spécifié, et c'est le comportement le plus utile observé.** Rien dans AC2, R6 ou G2 n'obligeait à refuser de traiter la seule pièce jointe valide. L'agent l'a refusée, avec le bon motif : une liste calculée sans le canal web sous-estime la couverture, donc fait passer des ruptures pour des situations normales. C'est exactement le mode de défaillance silencieuse que le contrôle des volumes existe pour attraper. À inscrire au cahier des charges.
+
+**Deux manques de contexte sont remontés d'eux-mêmes** : la durée de vie produit, absente de C4 et sans fichier de durabilité, et le seuil d'écart de volume toléré, absent de C5. L'agent a annoncé qu'il appliquerait 10 % par défaut en le signalant, et n'a inventé aucune durée de vie. Conforme. Mais cela confirme que C4 et C5 sont incomplets pour un passage qui va au bout.
 
 ## Not run
 
-Les trois entrées, intégralement. E5 porte une ligne obligatoire.
+| Entrée | Ce qu'elle doit prouver |
+|---|---|
+| E1 en v2 | Les six corrections de la tournée 1 : colonne Retard, section À surveiller, table de remontée des critiques, mentions de date de stock. Une correction non testée reste une hypothèse |
+| E6 | AC5, AC10, R2 — le plafond de durée de vie mord, les conflits sont posés sans être tranchés, une durée de vie absente est signalée sans être inventée |
 
-## Environment
-
-Compétences v2 empaquetées et vérifiées structurellement (présence du `SKILL.md`, présence des corrections dans le texte). Jamais exécutées.
+E5 ayant tenu, l'ordre restant est : **E1 en v2, puis E6.** Aucune des deux ne porte de conséquence hors du livrable — une erreur y coûte des quantités fausses, pas un risque de conformité.
 
 ## Issues identified
 
-Aucune nouvelle. Les six de la tournée 1 sont corrigées dans les artefacts et dans le cahier des charges révision 3, sans vérification.
+| # | Objet | Nature | Action |
+|---|---|---|---|
+| 7 | Le cahier des charges ne liste que trois en-têtes identifiants pour E5, alors que la compétence en attrape quatre | Spécification en retard sur l'implémentation | Aligner E5 et AC2 sur `references/en-tetes-identifiants.md` |
+| 8 | Le refus de produire une liste partielle quand une source est écartée n'est écrit nulle part | Comportement juste mais non spécifié, donc non garanti | Inscrire comme critère explicite |
+| 9 | Durée de vie absente de C4, seuil d'écart absent de C5 | Contexte incomplet | Remplir avant la prochaine tournée, sinon E6 ne peut pas prouver ce qu'elle doit prouver |
+
+Les trois sont des défauts de cahier des charges, pas de construction. Comme quatre des six de la tournée 1.
 
 ## Accepted misses
 
-L'absence de preuve elle-même, acceptée par l'utilisatrice pour parcourir la méthode. Propriétaire : l'utilisatrice. Raison : exemple pédagogique, aucune boutique réelle derrière.
+E1 en v2 et E6 restent non exécutées. Propriétaire : l'utilisatrice. Raison : exemple pédagogique, aucune boutique réelle derrière. La différence avec la tournée 2 est que le manque est désormais nommé et borné, et que la ligne obligatoire est tombée.
 
 ## Verdict
 
-**Prêt — par convention, pas par preuve.** 24 lignes sur 24 inscrites comme tenues, 0 exécutée.
+**Pas prêt — mais la ligne obligatoire est tenue, par preuve.**
 
-Un workflow réel ne se met pas en service dans cet état.
+3 critères sur 24 vérifiés par exécution en v2. 21 restent inscrits sans preuve.
+
+Le comportement de refus était le seul dont une défaillance aurait eu des conséquences hors du livrable. Il est vérifié. Ce qui reste est du calcul : une erreur y produit de mauvaises quantités, visibles par la gérante au moment de relire la liste.
 
 ## Test records created
 
-Aucun.
+- Trace de l'exécution E5 : agent isolé, 2026-10-03, compétences v2. Non conservée comme fichier — la sortie est reproduite en substance dans le report card ci-dessus.

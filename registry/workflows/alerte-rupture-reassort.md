@@ -16,7 +16,7 @@ Cas d'usage de démonstration, construit sur un jeu de données fictif : une bou
 
 Les sept étapes du cadre ont été parcourues. Sa valeur pédagogique tient autant à ses défauts qu'à son résultat : le test a révélé six problèmes, dont quatre venaient du cahier des charges et non de la construction. Le plus instructif était une formule vide de sens — la date limite de commande, toujours passée pour une rupture imminente, par construction — qui a traversé la conception, la relecture de sécurité et la vérification à blanc sans être vue.
 
-Réserve : une seule tournée de test a réellement tourné, sur la version 1 des compétences. Les tournées suivantes sont inscrites par convention. Le scénario qui vérifie le refus d'une donnée personnelle n'a jamais été exécuté.
+Réserve : deux tournées ont réellement tourné. La tournée 1 sur la version 1 des compétences, et la tournée 3 sur la seule entrée E5 — le refus d'une donnée personnelle, vérifié en version 2 par un agent isolé qui ne connaissait pas le résultat attendu. Il tient. Restent non exécutées l'entrée E1 en version 2, qui porte les six corrections de la tournée 1, et l'entrée E6, qui porte le plafond de durée de vie. 3 critères sur 24 sont vérifiés par preuve.
 
 # Artifacts
 
